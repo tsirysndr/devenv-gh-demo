@@ -22,7 +22,9 @@ jobs:
         run: |
           type nix
           nix --version
-          echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf
+          ls -ld /nix/var/nix/profiles/*
+          ls -ld /nix/var/nix/profiles/*/*
+          echo "trusted-users = root $USER @wheel" | sudo tee -a /etc/nix/nix.conf
           cat /etc/nix/nix.conf
           nix profile install --accept-flake-config github:cachix/cachix
           nix profile install --accept-flake-config tarball+https://install.devenv.sh/latest
