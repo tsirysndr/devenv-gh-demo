@@ -17,6 +17,7 @@ jobs:
             setup
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NIX_CONFIG: extra-access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
       - name: Show nix version
         run: |
           type nix
@@ -27,3 +28,4 @@ jobs:
           nix profile install --accept-flake-config tarball+https://install.devenv.sh/latest
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NIX_CONFIG: extra-access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
