@@ -1,0 +1,29 @@
+name: ci
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Fluent CI
+        uses: fluentci-io/setup-fluentci@v5
+        with:
+          wasm: true
+          plugin: nix
+          args: |
+            setup
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show nix version
+        run: |
+          type nix
+          nix --version
+          echo "trusted-users = root $USER" | tee -a /etc/nix/nix.conf
+          cat /etc/nix/nix.conf
+          nix profile install --accept-flake-config github:cachix/cachix
+          nix profile install --accept-flake-config tarball+https://install.devenv.sh/latest
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
