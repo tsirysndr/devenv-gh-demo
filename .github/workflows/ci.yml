@@ -26,8 +26,10 @@ jobs:
           ls -ld /nix/var/nix/profiles/*/*
           echo "trusted-users = root $USER @wheel" | sudo tee -a /etc/nix/nix.conf
           cat /etc/nix/nix.conf
-          nix profile install --accept-flake-config github:cachix/cachix
-          nix profile install --accept-flake-config tarball+https://install.devenv.sh/latest
+          sudo nix profile install --accept-flake-config github:cachix/cachix
+          sudo nix profile install --accept-flake-config tarball+https://install.devenv.sh/latest
+          type cachix
+          type devenv
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NIX_CONFIG: extra-access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
